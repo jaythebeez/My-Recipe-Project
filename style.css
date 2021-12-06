@@ -1,0 +1,544 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+:root{
+    --margin-top:80px;
+    --color-one:#021522;
+    --color-two:#FCFFFC;
+    --color-three:hsl(171, 100%, 37%);
+    --color-four:#E92234;
+    --color-five:#FF982A;
+    --header-height:5rem;
+}
+*{
+    box-sizing: border-box;
+    font-family:'Open Sans', sans-serif;
+    margin:0;
+    padding:0;
+    overflow-x: none;
+}
+
+body{
+    margin:0;
+    padding:0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: var(--color-two);
+}
+
+body::-webkit-scrollbar { /* WebKit */
+    width: 10px;
+    
+}
+/* Track */
+body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+  
+/* Handle */
+body::-webkit-scrollbar-thumb {
+    background: #888;
+    cursor:pointer;
+}
+  
+/* Handle on hover */
+body::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+header{
+    width:100%;
+    height:var(--header-height);
+}
+.header-container{
+    max-width:90%;
+    margin:auto;
+    display:flex;
+    align-items: center;
+    width:100%;
+    height:var(--header-height);
+    justify-content: space-between;
+
+}
+.header-start span{
+    font-size: 2rem;
+    font-family: cursive;
+    cursor:pointer;
+}
+.header-center{
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.header-center input{
+    width:500px;
+    border-radius:30px;
+    height:2.5rem;
+    outline:none;
+    border:0.2px solid rgba(0, 0, 0, 0.377);
+    padding:1px 5px;
+    font-size: 1.5rem;
+    padding-left:40px;
+    transition:.2s;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    background-color: var(--color-two);
+    transition:.3s;
+}
+.header-center button{
+    height:2.5rem;
+    width:80px;
+    background-image: linear-gradient(to right, var(--color-five),var(--color-four));
+    color:white;
+    border:none;
+    outline:none;
+    border-radius:5px;
+    cursor:pointer;
+    border-radius:30px;
+    margin-left:10px;
+    position:absolute;
+    top:0;
+    right:0;
+    font-size:1.1rem;
+}
+.header-center button:hover{
+    transform:scaleX(1.05);
+}
+.header-center input:focus{
+    box-shadow:0px 0px 8px 2px hsl(0deg 0% 0% / 20%);
+    cursor:text;
+}
+
+.header-end a{
+    text-decoration: none;
+    color:hsla(0, 3%, 12%, 0.863);
+    padding:10px;
+}
+.header-end a::after{
+    content: "";
+    width:100%;
+    height:2px;
+}
+.header-end a:hover{
+    color:hsl(0, 3%, 12%);
+}
+
+.header-end span{
+    display:none;
+}
+.search-container{
+    width:100%;
+}
+small{
+    font-weight: lighter;
+}
+.search-bar{
+    position:relative;
+}
+.search-bar span{
+    position:absolute;
+    top:5px;
+    left:3px;
+    opacity:75%;
+}
+.search-bar img{
+    width:30px;
+    height:30px;
+    opacity: .7;
+}
+.search-bar .arrow-down{
+    left:17px;
+    top:8px
+}
+.arrow-down img{
+    width:25px;
+    height:25px;
+}
+main{
+    width:100%;
+}
+.body-container{
+    width: 100%;
+    margin-top:var(--margin-top);
+}
+.landing-page{
+    height:calc(90vh - (var(--margin-top) + var(--header-height)));
+    display: flex;
+    width:90%;
+    margin:auto;
+    align-items: center;
+    gap:30px;
+}
+.left-side{
+    margin-left:var(--header-height);
+}
+.left-side h1{
+    margin-bottom: 10px;
+    font-size:2.5rem;
+}
+.left-side h4{
+    font-weight: lighter;
+    font-size:1.4rem;
+}
+.call-to-action{
+    width:90%;
+}
+.left-side button{
+    float:right;
+    font-size:17px;
+    margin:20px;
+    width:100px;
+    height:40px;
+    background-image:linear-gradient(to right, var(--color-five),var(--color-four));
+    outline:none;
+    border:none;
+    color:var(--color-two);
+    border-radius:5px;
+    cursor:pointer;
+}
+.left-side button:hover{
+    transform:scale(1.05);
+}
+.left-side button:active{
+    transform:scale(1);
+}
+.display-cards{
+    display:none;
+    width:90%;
+    margin:10px auto;
+    grid-gap:20px;
+    padding:20px;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    grid-auto-rows:200px;
+    background-color:#fff;
+    border-radius: 15px;
+}
+.card{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    border-radius: 15px;
+    cursor:pointer;
+    box-shadow: 0px 0px 12px 2px #555555;
+}
+.card-image{
+    position:relative;
+    width:100%;
+    height:100%;
+}
+.card-image img{
+    width:100%;
+    height:100%;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+.card-image .food-title{
+    position: absolute;
+    bottom:-100%;
+    right:5%;
+    color:white;
+    font-size: 1.2rem;
+    transition:.5s;
+    margin-left:10px;
+}
+.card-image .image-shade{
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.1));
+    transition:.5s;
+}
+
+.card-image:hover .image-shade{
+    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5));
+}
+.card-image:hover .food-title{
+    bottom:5%;
+}
+
+.switch-buttons{
+    justify-content: center;
+    margin:20px 20px;
+    display:none;
+}
+.switch-buttons span{
+    transform:translateY(5px);
+}
+.switch-buttons button{
+    margin: 0 20px;
+    background-color:hsla(14, 85%, 48%, 0.123);
+    border:0.5px solid hsla(14, 85%, 48%, 0.788);
+    padding:5px 10px;
+    border-radius: 15px;
+    transition:.5s;
+    cursor:pointer;
+    font-size: 1.2rem;
+}
+.switch-buttons button:hover{
+    background-color:hsla(14, 85%, 48%, 0.788);
+    color:white;
+}
+.switch-buttons button:active{
+    transform:scale(0.9);
+}
+.modal{
+    width:100%;
+    height:100vh;
+    background-color: rgba(0,0,0,0.5);
+    position:fixed;
+    top:0;
+    left:0;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    display:none;
+}
+.modal::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+}
+
+.modal .close{
+    font-size: 2rem;
+    position:fixed;
+    top:10px;
+    right:10px;
+    color:white;
+    cursor:pointer;
+}
+.modal-content{
+    max-width:720px;
+    background-color: #fff;
+    margin:auto;
+    margin-top:60px;
+    padding:10px;
+    color:#444;
+}
+.modal-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    grid-auto-rows: minmax(350px, auto);
+}
+.modal-header{
+    padding:10px;
+}
+.modal-header h1{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.modal-header img{
+    width:100%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+.modal-header p{
+    padding:10px;
+    border:0.5px dashed rgba(0, 0, 0, 0.473);
+
+}
+.modal-buttons{
+    width:100%;
+    display:flex;
+    justify-content: center;
+}
+.modal-buttons button{
+    background-image: linear-gradient(to right, var(--color-five),var(--color-four));
+    border:none;
+    outline:none;
+    border-radius:5px;
+    cursor:pointer;
+    padding:10px;
+}
+.modal-buttons button:hover{
+    transform:scale(1.1);
+}
+.modal-buttons button:active{
+    transform:scale(.95);
+}
+.modal-buttons button a{
+    color:white;
+    text-decoration: none;
+
+}
+.food-ingredients{
+    width:90%;
+    margin:auto;
+    height:30vh;
+}
+.food-ingredients ul{
+    padding-top:0;
+    padding:10px;
+    list-style-type: none;
+    box-shadow: inset 0px 0px 7px 0px rgb(0 0 0 / 22%);
+    height:35vh;
+    overflow-y:scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+}
+.food-ingredients ul::-webkit-scrollbar { /* WebKit */
+    width: 10px;
+    
+}
+/* Track */
+.food-ingredients ul::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+  
+/* Handle */
+.food-ingredients ul::-webkit-scrollbar-thumb {
+    background: #888;
+    cursor:pointer;
+}
+  
+/* Handle on hover */
+.food-ingredients ul::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+.food-ingredients ul li{
+    border-bottom:0.3px solid #00000025;
+    padding:3px;
+}
+.cooking-instructions{
+    width:90%;
+    margin:auto;
+}
+.cooking-instructions ul{
+    padding:10px;
+    list-style-type: none;
+    box-shadow: inset 0px 0px 7px 0px rgb(0 0 0 / 22%);
+    overflow-y:scroll;    
+    height:35vh;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+}
+.cooking-instructions ul::-webkit-scrollbar { /* WebKit */
+    width: 10px;
+    
+}
+/* Track */
+.cooking-instructions ul::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+  
+/* Handle */
+.cooking-instructions ul::-webkit-scrollbar-thumb {
+    background: #888;
+    cursor:pointer;
+}
+  
+/* Handle on hover */
+.cooking-instructions ul::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+.cooking-instructions ul li{
+    padding:3px;
+    border-bottom:0.3px solid #00000025;
+}
+.right-side span{
+    position:fixed;
+    font-size: .8rem;
+    color:#444;
+    bottom:20px;
+    right:20px;
+}
+.add-libs{
+    display:flex;
+    justify-content: space-between;
+    width:95%;
+    margin:10px auto;
+}
+.add-libs img{
+    width:30px;
+    height:30px;
+    cursor:pointer;
+}
+.add-libs img:hover{
+    transform:scale(1.05);
+}
+.add-libs button{
+    padding:10px;
+    background-image:linear-gradient(to right, var(--color-five),var(--color-four));
+    color:white;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    margin-right:10px;
+    border-radius:30px;
+}
+.add-libs button:hover{
+    transform:scale(1.05);
+}
+.libs-end{
+    display:flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.loader{
+    display:flex;
+    justify-content: center;
+}
+.loader img{
+    width:300px;
+    object-fit: contain;
+}
+
+@media screen and (max-width:770px){
+    .header-end a{
+        color:white;
+        display:block;
+        width:90%;
+        margin:0 auto;
+        margin-left:30px;
+    }
+    .header-end a:hover{
+        color:var(--color-five)
+    }
+    .header-links{
+        position:fixed;
+        top:0;
+        right:-200px;
+        background-color: var(--color-one);
+        height:100vh;
+        width:200px;
+        z-index:1;
+        transition:.5s;
+    }
+    .header-links .close{
+        margin-bottom:20px;
+        top:5px;
+        left:5px;
+        position:absolute;
+        color:white;
+        font-size:1.5rem;
+        font-weight: bold;
+    }
+    .header-end span{
+        display:block;
+        cursor:pointer;
+    }
+    .header-end img{
+        width:30px;
+        height:30px;
+    }
+    .right-side{
+        display:none;
+    }
+    .left-side{
+        margin:0 auto;
+        width:90%;
+    }
+    .card-image .food-title{
+        bottom:5%;
+    }
+}
+@media screen and (max-width:480px){
+    .header-center input{
+        width:95vw;
+        font-size:1.2rem;
+    }
+    small{
+        display:none;
+    }
+}

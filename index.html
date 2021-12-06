@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-start">
+                <span>Food UP!!!</span>
+                <small>Search your favorite meals.</small>
+            </div>
+            <div class="header-end">
+                <span><img src="images/menu-icon.svg" alt="menu-icon"></span>
+                <div class="header-links">
+                    <span class="close"></span>
+                    <a href="#" class="top searches">Search By Ingredients</a>
+                    <a href="#liked-recipes" class="liked-recipes">Liked Recipes</a>
+                </div>
+            </div>
+        </div>
+            <div class="header-center">
+                <form action="#" id="searchForm">
+                    <div class="search-bar">
+                        <span><img src="images/search-icon.svg" alt="search-icon"></span>
+                        <span class="arrow-down"><img src="images/arrow-down.svg" alt=""></span>
+                        <input type="search" placeholder="Search Over 1,000,000 Recipes...">
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+    </header>
+    <main>
+        <div class="body-container">
+            <div class="landing-page">
+                <div class="left-side">
+                    <h1>Don't Know What to Cook????</h1>
+                    <h4>Try searching Our Millions of Recipes</h4>
+                    <div class="call-to-action">
+                        <button>Click Here</button>
+                    </div>
+                </div>
+                <div class="right-side">  
+                    <img src="images/backart.jpg" alt="">
+                    <span>This website is powered by spoonacular api</span>
+                </div>
+            </div>
+            <div class="display-cards"></div>
+            <div class="switch-buttons">
+                <button class="prev-page">Prev</button>
+                <span>1</span>
+                <button class='next-page'>Next</button>
+            </div>
+        </div>
+    </main>
+    <div class="modal">
+       <span class="close">&times;</span>
+        <div class="modal-content">
+            <div class="modal-grid">
+                <div class="modal-header">
+                    <img src="images/preloader.gif" alt="">
+                    <div class="add-libs">
+                        <div class="libs-start">
+                            <!-- <span>Ready in Time</span>
+                            <span>Serves 4 People</span> -->
+                        </div>
+                        <div class="libs-end">
+                        <button>Add to list</button>
+                        <span><img id="likeButton" src="images/like.svg" alt=""></span> 
+                        </div>                      
+                    </div>
+                    <h1></h1>
+                    <p>My Food Description </p>
+                </div>
+                <div class="food-ingredients">
+                    <h2>Ingredients</h2>
+                    <ul></ul>
+                </div>
+                <div class="cooking-instructions">
+                    <h2>Instructions</h2>
+                    <ul></ul>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button><a href="">To Official Website</a></button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="app.js"></script>
+</html>
