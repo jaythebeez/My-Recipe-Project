@@ -84,21 +84,29 @@ elements.searchForm.addEventListener('submit', async (e)=>{
 
 //add Event Listener to the display card Element and allow the event to bubble up
 elements.displayCards.addEventListener('click', async (e)=>{
+    
+    //Check if you have clicked on a card
     if(e.target.closest('.card')){
-        
         //get id of card which was clicked;
-        const id = e.target.closest('.card').id;
+        let id = e.target.closest('.card').id;
 
-        const data = await controlRecipe(id);
+        if(e.target.className === "like-button"){
+            id = parseInt(id);
+            toggleLikeById(id);
+            displayCardLikeButton(id);
+        }
+        else{
+            const data = await controlRecipe(id);
 
-        //showModalRecipe(data);
-        showModalRecipe(data);
-
-        //Change Url to include the id 
-        window.location.hash = id;
-
-        //Display the recipe of the id clicked
-        elements.modal.style.display = 'block';
+            //showModalRecipe(data);
+            showModalRecipe(data);
+    
+            //Change Url to include the id 
+            window.location.hash = id;
+    
+            //Display the recipe of the id clicked
+            elements.modal.style.display = 'block';
+        }
     }
 });
 
@@ -184,15 +192,8 @@ window.addEventListener('load', async ()=>{
 //Like Button on modal
 elements.modalLikeButton.addEventListener('click',()=>{
     let id = state.modalId;
-    if(state.likes.likesArray.indexOf(id)==-1){
-        state.likes.likesArray.push(id);
-    }
-    else{
-        let index = state.likes.likesArray.indexOf(id);
-        state.likes.likesArray.splice(index,1);
-    }
-    state.likes.setLikes();
-    state.likes.isLiked();
+    toggleLikeById(id);
+    state.likes.modalIsLiked();
 });
 
 //Close elements when clicking on the body
@@ -299,23 +300,14 @@ class Likes{
     setLikes(){
         localStorage.setItem('id', JSON.stringify(this.likesArray));
     }
-    isLiked(){
-        const modalId = state.modalId;
-        if (this.likesArray.indexOf(modalId)==-1){
-            state.modalIsLiked = false;
-        }
-        else{
-            state.modalIsLiked = true;
-        }
-        this.displayLikeButton();
+    isLiked(id){
+        if (this.likesArray.indexOf(id)==-1)return false;
+        else return true;
     }
-    displayLikeButton(){
-        if (state.modalIsLiked){
-            elements.modalLikeButton.src="images/liked.svg";
-        }
-        else{
-            elements.modalLikeButton.src="images/like.svg"
-        }
+    modalIsLiked(){
+        const modalId = state.modalId;
+        this.isLiked(modalId) ? state.modalIsLiked = true : state.modalIsLiked = false;
+        displayModalLikeButton();
     }
     async getLikesResult(){
         const key = 'apiKey=c41f29241c9c4c45aadf926791fc4a07';
@@ -357,19 +349,26 @@ const controlRecipe = async (id) =>{
 function addFoodCards (data) {
     const markup = `
     <div class="card" id="${data.id}">
-        <div class="card-image">
-            <div class="image-shade"></div>
+        <div class="image-container">
             <img src="${data.image}" alt="food-image">
-            <span class="food-title">${data.title}</span>
+        </div>
+        <div class="food-details">
+            <div class="card-buttons">
+                <button>Add to List</button>
+                <img class="like-button" src="" alt="">
+            </div>
+            <div class="title-container"><span class="food-title">${data.title}</span></div>
         </div>
     </div>
     `;
     elements.displayCards.insertAdjacentHTML('beforeend', markup);
+    displayCardLikeButton(data.id);
 };
 
 //Add Values to the Modal before showing
 //Is this the optimal way to do this?
-//I almost feel like this is caching  but directly in the browser
+//I almost feel like this is caching but directly in the browser
+//will it also make my initial load slower?
 function showModalRecipe(data){
     elements.modal.querySelector('h1').textContent = data.title;
     data.ingredients.forEach(ing=>elements.foodList.insertAdjacentHTML('beforeend',`<li>${ing}</li>`));
@@ -379,7 +378,7 @@ function showModalRecipe(data){
     elements.modalLinkButton.href = data.url;
     state.modalOpen = true;
     state.modalId = data.id;
-    state.likes.isLiked();//Check if modal has been liked 
+    state.likes.modalIsLiked();//Check if modal has been liked 
 };
 
 function clearModal(){
@@ -389,8 +388,10 @@ function clearModal(){
     elements.cookingList.innerHTML = '';
     elements.modal.style.display = 'none';
     elements.foodDescription.innerHTML = '';
+    displayCardLikeButton(state.modalId);
     state.modalId = '';
     state.modalOpen = false;
+
     removeHash();
 }
 
@@ -470,9 +471,30 @@ function htmlEncode(str){
     return String(str).replace(/[^\w. ]/gi, function(c){
        return '&#'+c.charCodeAt(0)+';';
     });
-  }
+}
 
 //function to remove hash from the url
 function removeHash(){ 
     history.pushState("", document.title, window.location.pathname + window.location.search);
+}
+
+function displayModalLikeButton(){
+    state.modalIsLiked ? elements.modalLikeButton.src="images/liked.svg" : elements.modalLikeButton.src="images/like.svg";
+};
+
+function displayCardLikeButton(id){
+    let card = document.getElementById(id);
+    let cardImage = card.querySelector('.like-button');
+    state.likes.isLiked(id) ? cardImage.src = "images/liked.svg" : cardImage.src = "images/like.svg";
+}
+//use this function to toggle an id to the likes array
+function toggleLikeById(id){
+    if(state.likes.likesArray.indexOf(id) == -1){
+        state.likes.likesArray.push(id);
+    }
+    else{
+        let index = state.likes.likesArray.indexOf(id);
+        state.likes.likesArray.splice(index,1);
+    }
+    state.likes.setLikes();
 }
