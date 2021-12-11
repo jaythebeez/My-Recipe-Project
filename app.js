@@ -301,7 +301,7 @@ class Likes{
         localStorage.setItem('id', JSON.stringify(this.likesArray));
     }
     isLiked(id){
-        if (this.likesArray.indexOf(id)==-1)return false;
+        if (this.likesArray.indexOf(id) === -1)return false;
         else return true;
     }
     modalIsLiked(){

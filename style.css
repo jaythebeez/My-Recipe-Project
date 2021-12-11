@@ -8,7 +8,7 @@
     --color-four:#E92234;
     --color-five:#FF982A;
     --header-height:5rem;
-    --card-color:#efefef7d;
+    --card-color:#efefef80;
 }
 *{
     box-sizing: border-box;
@@ -217,13 +217,21 @@ main{
     padding:15px;
     background-color:var(--card-color);
     border-radius:15px;
+    transition: .2s linear;
+}
+.card:hover{
+    box-shadow: 0 0 1px 1px #00000040;
 }
 .image-container{
     width:100%;
+    transition:.2s;
 }
 .image-container img{
     width:100%;
     aspect-ratio: 16/9;
+}
+.card:hover .image-container{
+    transform:scale(.95);
 }
 .card-buttons{
     display:flex;
@@ -236,15 +244,32 @@ main{
     background-image: linear-gradient(to right, var(--color-five),var(--color-four));
     border:none;
     outline:none;
-    border-radius:5px;
+    border-radius:30px;
     cursor:pointer;
     padding:10px;
+    color:#fff;
+    transition:.2s;
+}
+.card-buttons button:hover{
+    transform:scale(1.05);
+}
+.card-buttons img{
+    object-fit: contain;
+    width:30px;
+    transition:.2s;
+}
+.card-buttons img:hover{
+    transform:scale(1.05);
+}
+.card-buttons img:active{
+    transform:scale(1.1);
 }
 .title-container{
     margin:1rem 0;
 }
 .food-title{
-    font-size:1.3rem;
+    font-size:1.2rem;
+    color:#555;
 }
 .switch-buttons{
     justify-content: center;
@@ -318,7 +343,7 @@ main{
 }
 .modal-header img{
     width:100%;
-    object-fit: contain;
+    aspect-ratio: 16/9;
     border-radius: 4px;
 }
 .modal-header p{
@@ -528,5 +553,8 @@ main{
     }
     small{
         display:none;
+    }
+    .card{
+        box-shadow: 0 0 1px 1px #00000040;
     }
 }
