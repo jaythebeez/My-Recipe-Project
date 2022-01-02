@@ -1,32 +1,7 @@
-//This is my first Real Javascript Project 
-//This project is a Recipe Search Website based on the API from spoonacular
-
-//Object to contain all my HTML Elements which I am going to use in my javascript
-const elements = {
-    documentBody: document.querySelector('body'),
-    navbarIcon: document.querySelector('.header-end span'),//My Responsive Navbar Icon
-    headerLinks: document.querySelector('.header-links'),//Div which contains all links in the header
-    navbarCloseButton: document.querySelector('.header-links .close'),
-    searchBar: document.querySelector('.search-bar input'),
-    searchForm: document.forms['searchForm'],
-    landingPage: document.querySelector('.landing-page'),
-    displayCards: document.querySelector('.display-cards'),
-    modal: document.querySelector('.modal'),
-    cards: document.querySelectorAll('.cards'),
-    modalCloseButton: document.querySelector('.modal .close'),
-    foodList: document.querySelector('.food-ingredients ul'),
-    cookingList: document.querySelector('.cooking-instructions ul'),
-    switchButtonsContainer: document.querySelector('.switch-buttons'),
-    nextPageButton: document.querySelector('.next-page'),
-    prevPageButton: document.querySelector('.prev-page'),
-    pageNumberDigits: document.querySelector('.switch-buttons span'),
-    bodyContainer: document.querySelector('.body-container'),
-    modalLikeButton:document.querySelector('#likeButton'),
-    likedRecipesButton:document.querySelector('.liked-recipes'),
-    headerIcon: document.querySelector('.header-start span'),
-    foodDescription: document.querySelector('.modal-header p'),
-    modalLinkButton: document.querySelector('.modal button a')
-};
+import Likes from './modules/Likes.js';
+import Recipe from './modules/Recipe.js';
+import Search from './modules/Search.js';
+import elements from './modules/elements.js'
 
 //initialize state of the application
 const state ={};
@@ -235,88 +210,6 @@ elements.headerIcon.addEventListener('click', ()=>{
 //End of Event Bindings
 };
 
-/////////////////////
-////Classes//////////
-////////////////////
-
-/////////////////////
-///Search Class
-////////////////////
-
-class Search{
-    constructor(query){
-        this.query = query;
-        this.pageNumber=1;
-        this.final={};
-        this.numberofResults = 15; //adjust this to add to the number of results gotten from api per request
-    }
-    async getResults(){
-        const key = 'apiKey=c41f29241c9c4c45aadf926791fc4a07';//Add Your Api key here you can get it from spoonacular
-        const res = await fetch(`https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=15&${key}&offset=${(this.pageNumber-1) * this.numberofResults}`);
-        const result = await res.json();
-        this.final.result =  result.results;
-        this.final.total = result.totalResults;
-        this.final.totalPages = Math.ceil(this.final.total / 15);
-        return this.final;
-    }
-};
-
-class Recipe{
-    constructor(query){
-        this.query = query;
-        this.finalResult = {};
-    }
-    async getRecipes(){
-        const key = 'apiKey=c41f29241c9c4c45aadf926791fc4a07';//Add Your Api key here you can get it from spoonacular
-        const res = await fetch(`https://api.spoonacular.com/recipes/${this.query}/information?includeNutrition=false&${key}`);
-        this.result = await res.json();
-        this.finalResult.id = this.result.id;
-        this.finalResult.title = this.result.title;
-        this.finalResult.ingredients = this.result.extendedIngredients.map(ing=>`${ing.measures.us.amount} ${ing.measures.us.unitShort} ${ing.nameClean}`);
-        this.finalResult.instructions = this.result.analyzedInstructions[0].steps.map(step=>step.step);
-        this.finalResult.summary = this.result.summary;
-        this.finalResult.timeReady = this.result.readyInMinutes
-        this.finalResult.image = this.result.image;
-        this.finalResult.url = this.result.sourceUrl;
-        return this.finalResult;
-    }
-}
-
-class Likes{
-    constructor(){
-        this.likesArray=[];
-    }
-    initailizeLikes(){
-        if(!localStorage.id){
-            this.setLikes();
-        }
-        else{
-            this.getLikes();
-        }
-    }
-    getLikes(){
-        this.likesArray = JSON.parse(localStorage.getItem('id'));
-    }
-    setLikes(){
-        localStorage.setItem('id', JSON.stringify(this.likesArray));
-    }
-    isLiked(id){
-        if (this.likesArray.indexOf(id) === -1)return false;
-        else return true;
-    }
-    modalIsLiked(){
-        const modalId = state.modalId;
-        this.isLiked(modalId) ? state.modalIsLiked = true : state.modalIsLiked = false;
-        displayModalLikeButton();
-    }
-    async getLikesResult(){
-        const key = 'apiKey=c41f29241c9c4c45aadf926791fc4a07';
-        const listOfIds = this.likesArray.join(',');
-        const res = await fetch(`https://api.spoonacular.com/recipes/informationBulk?ids=${listOfIds}&${key}`);
-        let result = await res.json();
-        return result;
-    }
-}
 
 ////////////////////
 ///Controllers/////
@@ -354,7 +247,7 @@ function addFoodCards (data) {
         </div>
         <div class="food-details">
             <div class="card-buttons">
-                <button>Add to List</button>
+                <!--<button>Add to List</button>-->
                 <img class="like-button" src="" alt="">
             </div>
             <div class="title-container"><span class="food-title">${data.title}</span></div>
