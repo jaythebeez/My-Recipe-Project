@@ -1,3 +1,4 @@
+import state from "../app.js";
 class Search{
     constructor(query){
         this.query = query;

@@ -1,10 +1,10 @@
 import Likes from './modules/Likes.js';
 import Recipe from './modules/Recipe.js';
 import Search from './modules/Search.js';
-import elements from './modules/elements.js'
+import elements from './modules/elements.js';
 
 //initialize state of the application
-const state ={};
+const state = {};
 
 //Call Function which contains all Event Bindings
 //Should i have used a Class for this?
@@ -37,9 +37,10 @@ elements.searchForm.addEventListener('submit', async (e)=>{
     showPreloader(elements.bodyContainer);
     
     //wait for the data from the control Search function
+    try{
     const data = await controlSearch();
     const total = data.total;
-
+        
     //clear spinner
     clearPreloader(elements.bodyContainer);
 
@@ -54,6 +55,12 @@ elements.searchForm.addEventListener('submit', async (e)=>{
     }
     else{
         alert('Try Searching For another Food Recipe');
+    }
+    }
+    catch(err){
+        alert(err);
+        clearPreloader(elements.bodyContainer);
+        switchButtons(0);
     }
 });
 
@@ -216,12 +223,19 @@ elements.headerIcon.addEventListener('click', ()=>{
 ////////////////////
 
 const controlSearch = async () =>{
-    const query = htmlEncode(elements.searchBar.value);
-    if (query){
-        state.search = new Search(query);// Initiate new search and set the variable to state 
-        const results = await state.search.getResults();
-        return results;
+    let query = elements.searchBar.value;
+    if (query.match(/^[a-zA-Z0-9\s]*$/)){
+        query = htmlEncode(query);
+        if (query){
+            state.search = new Search(query);// Initiate new search and set the variable to state 
+            const results = await state.search.getResults();
+            return results;
+        }
     }
+    else {
+        throw new Error('Do not use special characters in search bar');
+    }
+    
 };
 
 const controlRecipe = async (id) =>{
@@ -243,14 +257,16 @@ function addFoodCards (data) {
     const markup = `
     <div class="card" id="${data.id}">
         <div class="image-container">
-            <img src="${data.image}" alt="food-image">
+            <img src="${data.image}" alt="food-image" class="food-image">
+            <div class="image-shade">
+            <img class="image-eye" src="images/eye.svg" alt="">
+            </div>
         </div>
         <div class="food-details">
             <div class="card-buttons">
-                <!--<button>Add to List</button>-->
                 <img class="like-button" src="" alt="">
             </div>
-            <div class="title-container"><span class="food-title">${data.title}</span></div>
+            <div class="title-container"><span class="food-title">${shorten(data.title)}</span></div>
         </div>
     </div>
     `;
@@ -371,9 +387,7 @@ function removeHash(){
     history.pushState("", document.title, window.location.pathname + window.location.search);
 }
 
-function displayModalLikeButton(){
-    state.modalIsLiked ? elements.modalLikeButton.src="images/liked.svg" : elements.modalLikeButton.src="images/like.svg";
-};
+
 
 function displayCardLikeButton(id){
     let card = document.getElementById(id);
@@ -391,3 +405,13 @@ function toggleLikeById(id){
     }
     state.likes.setLikes();
 }
+function shorten(word){
+    if(word.length > 25 ){
+        return `${word.substring(0,20)}...`;
+    }
+    else{
+        return word;
+    }
+}
+
+export default state;

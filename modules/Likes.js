@@ -1,3 +1,5 @@
+import state from "../app.js";
+import elements from "./elements.js";
 class Likes{
     constructor(){
         this.likesArray=[];
@@ -23,7 +25,7 @@ class Likes{
     modalIsLiked(){
         const modalId = state.modalId;
         this.isLiked(modalId) ? state.modalIsLiked = true : state.modalIsLiked = false;
-        displayModalLikeButton();
+        this.displayModalLikeButton();
     }
     async getLikesResult(){
         const key = 'apiKey=c41f29241c9c4c45aadf926791fc4a07';
@@ -32,6 +34,9 @@ class Likes{
         let result = await res.json();
         return result;
     }
+    displayModalLikeButton(){
+        state.modalIsLiked ? elements.modalLikeButton.src="images/liked.svg" : elements.modalLikeButton.src="images/like.svg";
+    };
 }
 
 export default Likes;
