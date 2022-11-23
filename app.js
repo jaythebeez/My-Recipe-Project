@@ -300,7 +300,6 @@ function clearModal(){
     displayCardLikeButton(state.modalId);
     state.modalId = '';
     state.modalOpen = false;
-
     removeHash();
 }
 
